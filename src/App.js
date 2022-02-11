@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import tmdbObject from './Tmdb'
+import MovieRow from "./components/MovieRow";
+import './App.css'
 
 function HelloWorld() {
 
@@ -20,9 +22,7 @@ function HelloWorld() {
     <div className="page">
       <section className="lists">
         {movieList.map((item) => (
-          <div key={item.title}>
-            {item.title}
-          </div>
+          <MovieRow key={item.title}  title={item.title} items={ item.items } />
         ))}
       </section>
     </div>
