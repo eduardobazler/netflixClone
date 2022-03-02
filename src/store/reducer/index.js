@@ -1,10 +1,6 @@
 import { combineReducers } from "redux";
+import loadAllFilms from './loadAllFilms'
 
-
-const loadAllFilms = (state = {}, action) => {
-  return { ...state, allFilms: action.data }
-}
-
-const rootReducer = combineReducers({ loadAllFilms })
+const rootReducer = combineReducers({ loadAllFilms });
 
 export default rootReducer;

@@ -8,28 +8,11 @@ import './App.css'
 import FeaturedMovie from "./components/FeaturedMovie";
 import Header from "./components/Header";
 
-function MainFilms({ allFilms, requestAllFilms }) {
-
-  const [movieList, setMovieList] = useState([]);
-  const [featureData, setFeatureData] = useState(null);
+function MainFilms({ movieList, requestAllFilms, featureData }) {
   const [blackHeader, setBlackHeader] = useState(false);
 
   useEffect(() => {
-    const loadAll = async () => {
-      // pega a lista dos filmes
-      let list = await tmdbObject.getHomeList();
-      setMovieList(list);
-      
-      let originals = list.filter(({ slug }) => slug === 'originals');
-      const randomChosen = Math.floor(Math.random() * (originals[0].items.results.length - 1))
-      const chosen = originals[0].items.results[randomChosen];
-      const chosenInfo = await tmdbObject.getMovieInfo(chosen.id, 'tv');
-      setFeatureData(chosenInfo);
-    }
-
-    loadAll();
     requestAllFilms();
-
   }, []);
 
   useEffect(() => {
@@ -48,7 +31,7 @@ function MainFilms({ allFilms, requestAllFilms }) {
     }
   }, [])
 
-  console.log(allFilms)
+  console.log(movieList);
 
   return (
     <div className="page">
@@ -72,7 +55,8 @@ const mapDispatchToProps = (dispatch) => ({
 })
 
 const mapStateToProps = (state) => ({
-  allFilms: state.loadAllFilms.allFilms,
+  movieList: state.loadAllFilms.allFilms,
+  featureData: state.loadAllFilms.featureData,
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainFilms)
