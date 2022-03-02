@@ -72,7 +72,7 @@ const mapDispatchToProps = (dispatch) => ({
 })
 
 const mapStateToProps = (state) => ({
-  allFilms: state.loadAllFilms,
+  allFilms: state.loadAllFilms.allFilms,
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainFilms)
