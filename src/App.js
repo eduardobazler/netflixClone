@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
+import { connect } from "react-redux";
+import fetchHomeListTMDB from './store/action'
 import tmdbObject from './Tmdb'
+
 import MovieRow from "./components/MovieRow";
 import './App.css'
 import FeaturedMovie from "./components/FeaturedMovie";
 import Header from "./components/Header";
 
-function HelloWorld() {
+function MainFilms({ allFilms, requestAllFilms }) {
 
   const [movieList, setMovieList] = useState([]);
   const [featureData, setFeatureData] = useState(null);
@@ -25,6 +28,7 @@ function HelloWorld() {
     }
 
     loadAll();
+    requestAllFilms();
 
   }, []);
 
@@ -44,9 +48,10 @@ function HelloWorld() {
     }
   }, [])
 
+  console.log(allFilms)
+
   return (
     <div className="page">
-
       <Header black={ blackHeader } />
 
       {featureData && 
@@ -62,4 +67,12 @@ function HelloWorld() {
   )
 }
 
-export default HelloWorld
+const mapDispatchToProps = (dispatch) => ({
+  requestAllFilms: () => { dispatch(fetchHomeListTMDB())}
+})
+
+const mapStateToProps = (state) => ({
+  allFilms: state.loadAllFilms,
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(MainFilms)
